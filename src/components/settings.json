@@ -1,4 +1,10 @@
 {
+    "isHttps": true,
+    "api": {
+        "token": "TOKEN",
+        "domain": "DOMAIN",
+        "port": "PORT"
+    },
     "visual": {
         "name": "Assistant",
         "description": "A helpful assistant",

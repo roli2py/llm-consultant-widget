@@ -2,17 +2,16 @@ import type IMessage from "@/components/interfaces/imessage";
 
 
 export default class MessagesReceiver {
-    static async receive(chatId: string): Promise<IMessage[]> {
-        try {} catch (error) {
-            if (error instanceof TypeError) {
-                console.log(`${error.name} occured!`);
-            }
-        }
+    private apiToken;
 
-        // Exception: TypeError
-        const response = await fetch(`http://backend:5000/messages?chatId=${chatId}`, {
+    constructor(apiToken: string) {
+        this.apiToken = apiToken;
+    }
+
+    async receive(chatId: string): Promise<IMessage[]> {
+        const response = await fetch(`http://api:5000/messages?chatId=${chatId}`, {
             headers: {
-                "Authorization": `Bearer ${process.env.ASSISTANT_BACKEND_TOKEN}`,
+                "Authorization": `Bearer ${this.apiToken}`,
                 "Content-Type": "application/json; charset=utf-8"
             }
         });
