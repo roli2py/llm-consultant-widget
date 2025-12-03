@@ -1,26 +1,26 @@
 import { useEffect } from "react";
 
 import type {
+    ChangeEvent,
     Dispatch,
-    SetStateAction,
     KeyboardEvent,
     ReactElement,
-    ChangeEvent,
-    MutableRefObject
+    RefObject,
+    SetStateAction
 } from "react";
 
 
 export default function Textbox(
     { text, setText, sendMessage, canWriting, textboxRef, textboxHeight, setTextboxHeight }:
-    {
-        text: string,
-        setText: Dispatch<SetStateAction<string>>,
-        sendMessage: (text: string) => void,
-        canWriting: boolean,
-        textboxRef: MutableRefObject<null | HTMLTextAreaElement>,
-        textboxHeight: string,
-        setTextboxHeight: Dispatch<SetStateAction<string>>
-    }
+        {
+            text: string,
+            setText: Dispatch<SetStateAction<string>>,
+            sendMessage: (text: string) => void,
+            canWriting: boolean,
+            textboxRef: RefObject<null | HTMLTextAreaElement>,
+            textboxHeight: string,
+            setTextboxHeight: Dispatch<SetStateAction<string>>
+        }
 ): ReactElement {
     function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
         const element = event.target;
@@ -30,7 +30,7 @@ export default function Textbox(
         element.style.height = "32px";
 
         const textboxHeight = element.scrollHeight.toString() + "px";
-        
+
         element.style.height = textboxHeight;
         setTextboxHeight(textboxHeight);
     }
@@ -46,7 +46,7 @@ export default function Textbox(
             }
         }
     }
-    
+
     // Focus on textbox after receiving a message
     useEffect(() => {
         if (textboxRef !== null && canWriting === true) {
@@ -66,7 +66,7 @@ export default function Textbox(
                 onKeyDown={handleSendKey}
                 ref={textboxRef}
                 disabled={!canWriting}
-                style={{height: textboxHeight}}
+                style={{ height: textboxHeight }}
             />
         </div>
     );

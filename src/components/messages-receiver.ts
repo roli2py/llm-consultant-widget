@@ -1,4 +1,4 @@
-import type IMessage from "@/components/interfaces/imessage";
+import type IMessage from "./interfaces/imessage";
 
 
 export default class MessagesReceiver {

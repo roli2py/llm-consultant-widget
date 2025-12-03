@@ -1,20 +1,19 @@
-const Message = dynamic(() => import("@/components/message"), { ssr: false });
+import Message from "./message";
 
-import dynamic from "next/dynamic";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-import type IMessage from "@/components/interfaces/imessage";
+import type IMessage from "./interfaces/imessage";
 
-import type { MutableRefObject } from "react";
+import type { RefObject } from "react";
 
 
 export default function Chat(
     { messages }:
-    {
-        messages: IMessage[]
-    }
+        {
+            messages: IMessage[]
+        }
 ) {
-    const chatRef: MutableRefObject<null | HTMLElement> = useRef(null);
+    const chatRef: RefObject<null | HTMLElement> = useRef(null);
 
     const messagesComponents = messages.map((message, index) => {
         return (
@@ -29,7 +28,7 @@ export default function Chat(
                 const timer = setTimeout(() => {
                     chat.scrollTop = chat.scrollHeight;
                 }, 300);
-    
+
                 return () => clearTimeout(timer);
             }
         }

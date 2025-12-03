@@ -1,23 +1,21 @@
-import settings from "@/components/settings.json";
+import settings from "./settings.json";
 
-import Image from "next/image";
-
-import type { Dispatch, SetStateAction, MouseEvent, ReactElement } from "react";
+import type { Dispatch, MouseEvent, ReactElement, SetStateAction } from "react";
 
 
 export default function SendButton(
     { text, setText, sendMessage, canWriting, setTextboxHeight }:
-    {
-        text: string,
-        setText: Dispatch<SetStateAction<string>>,
-        sendMessage: (text: string) => void,
-        canWriting: boolean,
-        setTextboxHeight: Dispatch<SetStateAction<string>>
-    }
+        {
+            text: string,
+            setText: Dispatch<SetStateAction<string>>,
+            sendMessage: (text: string) => void,
+            canWriting: boolean,
+            setTextboxHeight: Dispatch<SetStateAction<string>>
+        }
 ): ReactElement {
     function handleSendKey(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        
+
         if (canWriting && text.trim()) {
             sendMessage(text);
             setText("");
@@ -32,7 +30,7 @@ export default function SendButton(
             onClick={handleSendKey}
             disabled={!canWriting}
         >
-            <Image
+            <img
                 src={settings.visual.sendIconUrl}
                 alt="Send"
                 width={300}

@@ -1,14 +1,14 @@
-import showdownConverterProxy from "@/components/showdown-converter-proxy";
-import escapeHtmlExceptCode from "@/components/html-escape";
+import escapeHtmlExceptCode from "./html-escape";
+import showdownConverterProxy from "./showdown-converter-proxy";
 
 
 export default function Message(
     { key, role, text }:
-    {
-        key: number,
-        role: string,
-        text: string
-    }
+        {
+            key: number,
+            role: string,
+            text: string
+        }
 ) {
     const converter = showdownConverterProxy.converter;
 

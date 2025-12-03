@@ -1,41 +1,40 @@
 "use client";
-import Chat from "@/components/chat";
-import Textbox from "@/components/textbox";
-import SendButton from "@/components/send-button";
-import settings from "@/components/settings.json";
+import Chat from "./chat";
+import SendButton from "./send-button";
+import settings from "./settings.json";
+import Textbox from "./textbox";
 
-import Image from "next/image";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-import type IMessage from "@/components/interfaces/imessage";
+import type IMessage from "./interfaces/imessage";
 
-import type { MutableRefObject, ReactElement } from "react";
+import type { ReactElement, RefObject } from "react";
 
 
 export default function Widget(
     { backendToken, backendPublicUrl, chatId, savedMessages }:
-    {
-        backendToken: string,
-        backendPublicUrl: string,
-        chatId: string,
-        savedMessages: IMessage[]
-    }
+        {
+            backendToken: string,
+            backendPublicUrl: string,
+            chatId: string,
+            savedMessages: IMessage[]
+        }
 ): ReactElement {
-    const socketRef: MutableRefObject<null | Socket> = useRef(null);
+    const socketRef: RefObject<null | Socket> = useRef(null);
 
     const [messages, setMessages] = useState(savedMessages);
 
     const [canWriting, setCanWriting] = useState(true);
-    
+
     const textboxRef = useRef(null);
 
     useEffect(() => {
         const socket = io(backendPublicUrl, {
-                extraHeaders: {
-                    "Authorization": `Bearer ${backendToken}`
-                }
+            extraHeaders: {
+                "Authorization": `Bearer ${backendToken}`
             }
+        }
         );
 
         socketRef.current = socket;
@@ -43,11 +42,11 @@ export default function Widget(
         socket.on("connect", () => {
             console.log("Chat connected!");
         });
-        
+
         socket.on("disconnect", () => {
             console.log("Chat disconnected!");
         });
-    
+
         socket.on("error", error => {
             console.error(error);
         });
@@ -64,12 +63,12 @@ export default function Widget(
                 socket.on("message", text => {
                     console.log("Message received!");
                     setCanWriting(true);
-                    
+
                     const message = {
                         role: "operator",
                         text
                     }
-                    
+
                     setMessages([...messages, message]);
                 });
             }
@@ -78,14 +77,14 @@ export default function Widget(
 
     function sendMessage(text: string) {
         setCanWriting(false);
-    
+
         const message = {
             role: "user",
             text
         }
-    
+
         setMessages([...messages, message]);
-    
+
         if (socketRef !== null) {
             const socket = socketRef.current
             if (socket instanceof Socket) {
@@ -109,16 +108,15 @@ export default function Widget(
                         {settings.visual.description}
                     </p>
                 </hgroup>
-                <Image
+                <img
                     src={settings.visual.avatarUrl}
                     alt="Avatar"
                     width={500}
                     height={500}
                     className="operator-avatar"
-                    priority={true}
                 />
             </header>
-            <Chat messages={messages}/>
+            <Chat messages={messages} />
             <footer>
                 <Textbox
                     text={text}
