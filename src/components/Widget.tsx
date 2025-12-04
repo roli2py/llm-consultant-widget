@@ -1,8 +1,7 @@
-"use client";
-import Chat from "./chat";
-import SendButton from "./send-button";
+import Chat from "./Chat";
+import SendButton from "./SendButton";
 import settings from "./settings.json";
-import Textbox from "./textbox";
+import Textbox from "./Textbox";
 
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";

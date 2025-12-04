@@ -1,12 +1,13 @@
+import { use } from "react";
 import MessagesReceiver from "./components/messages-receiver";
-import Widget from "./components/widget";
+import Widget from "./components/Widget";
 
 import type { ReactElement } from "react";
 import { ulid } from "ulidx";
 import settings from "./components/settings.json";
 
 
-export default async function App(): Promise<ReactElement> {
+export default function App(): ReactElement {
     let apiPublicUrl = `http://${settings.api.domain}:${settings.api.port}`;
     if (settings.isHttps) {
         apiPublicUrl = `https://${settings.api.domain}:${settings.api.port}`;
@@ -18,7 +19,8 @@ export default async function App(): Promise<ReactElement> {
         chatId = localStorage.getItem("chatId") as string;
     }
 
-    const savedMessages = await new MessagesReceiver(settings.api.token).receive(chatId);
+    // TODO fix a using of the async function
+    const savedMessages = use(new MessagesReceiver(apiPublicUrl, settings.api.token).receive(chatId));
 
     return <Widget backendToken={settings.api.token} backendPublicUrl={apiPublicUrl} chatId={chatId} savedMessages={savedMessages} />
 }

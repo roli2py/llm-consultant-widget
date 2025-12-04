@@ -1,4 +1,4 @@
-import Message from "./message";
+import Message from "./Message";
 
 import { useEffect, useRef } from "react";
 
