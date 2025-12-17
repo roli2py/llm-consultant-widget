@@ -12,13 +12,16 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@fontsource-variable/ibm-plex-sans": "^5.2.8",
     "jose": "^5.9.6",
     "normalize.css": "^8.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "showdown": "^2.1.0",
     "socket.io-client": "^4.8.1",
-    "ulidx": "^2.4.1"
+    "ulidx": "^2.4.1",
+    "vike": "^0.4.249",
+    "vike-react": "^0.6.16"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

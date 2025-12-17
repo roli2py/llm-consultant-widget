@@ -10,6 +10,8 @@ import type IMessage from "./interfaces/imessage";
 
 import type { ReactElement, RefObject } from "react";
 
+import "./Widget.css";
+
 
 export default function Widget(
     { backendToken, backendPublicUrl, chatId, savedMessages }:

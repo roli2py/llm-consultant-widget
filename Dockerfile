@@ -6,8 +6,5 @@ WORKDIR /home/web/llm-consultant-widget
 
 COPY --chown=node:node . .
 
-VOLUME [ "/home/web/llm-consultant-widget/dist" ]
-
-RUN [ "npm", "install" ]
-RUN [ "npm", "run", "build" ]
-# TODO add a healthcheck that indicate that the build was finished
+# Explicit invoke of a failure. `Dockerfile` must be recreated due to the migration
+RUN [ "exit", "1" ]
