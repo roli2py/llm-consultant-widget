@@ -43,11 +43,11 @@ export default function Page() {
         socketRef.current = socket;
 
         socket.on("connect", () => {
-            console.log("Chat connected!");
+            console.log("Chat connected");
         });
 
         socket.on("disconnect", () => {
-            console.log("Chat disconnected!");
+            console.log("Chat disconnected");
         });
 
         socket.on("error", error => {
@@ -63,18 +63,17 @@ export default function Page() {
         if (socketRef !== null) {
             const socket = socketRef.current;
             if (socket instanceof Socket) {
-                socket.on("message", text => {
-                    console.log("Message received!");
-                    setCanWriting(true);
+                // TODO fix a handle of the message event
+                socket.on("message", json => {
+                    console.log("Message received");
 
-                    const message = {
-                        role: "operator",
-                        text,
-                    }
+                    const operatorMessage: IMessage = JSON.parse(json);
 
                     /* TODO solve a problem with a not changing array
                      * due to the depacking to simplify the rendering */
-                    setMessages([...messages, message]);
+                    setMessages([...messages, operatorMessage]);
+
+                    setCanWriting(true);
                 });
             }
         }
@@ -83,7 +82,10 @@ export default function Page() {
     function sendMessage(text: string) {
         setCanWriting(false);
 
+        const userMessageUuid = window.crypto.randomUUID();
+
         const message = {
+            id: userMessageUuid,
             role: "user",
             text,
         }
@@ -95,7 +97,7 @@ export default function Page() {
         if (socketRef !== null) {
             const socket = socketRef.current;
             if (socket instanceof Socket) {
-                socket.send(chatId, text);
+                socket.send(chatId, userMessageUuid, text);
             }
         }
     };

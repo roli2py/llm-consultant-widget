@@ -1,6 +1,6 @@
 import Message from "./Message";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import type IMessage from "./interfaces/imessage";
 
@@ -15,26 +15,18 @@ export default function Chat(
 ) {
     const chatRef: RefObject<null | HTMLElement> = useRef(null);
 
-    // TODO add `useMemo()`?
-    const messagesComponents = messages.map((message, index) => {
+    const messagesComponents = useMemo(() => messages.map(message => {
         return (
             // TODO replace `index` to an another identifier
-            <Message key={index} role={message.role} text={message.text} />
+            <Message key_={message.id} role={message.role} text={message.text} />
         );
-    });
+    }), [messages]);
 
-    // TODO can I find a better solution?
     useEffect(() => {
         if (chatRef !== null) {
-            const chat = chatRef.current
+            const chat = chatRef.current;
             if (chat instanceof HTMLElement) {
-                const timer = setTimeout(() => {
-                    chat.scrollTop = chat.scrollHeight;
-                }, 300);
-
-                return () => {
-                    clearTimeout(timer)
-                };
+                chat.scrollTop = chat.scrollHeight;
             }
         }
     }, [messagesComponents]);
