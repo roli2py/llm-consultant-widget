@@ -1,6 +1,6 @@
 import settings from "./settings.json";
 
-import type { Dispatch, MouseEvent, ReactElement, SetStateAction } from "react";
+import type { Dispatch, MouseEvent, SetStateAction } from "react";
 
 
 export default function SendButton(
@@ -12,10 +12,14 @@ export default function SendButton(
             canWriting: boolean,
             setTextboxHeight: Dispatch<SetStateAction<string>>
         }
-): ReactElement {
+) {
     function handleSendKey(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
 
+        /* Using `String.prototype.trim()` in the condition to check
+         * that a text is not empty. That is, `String.prototype.trim()`
+         * outputs "" if there is no text and, consequently, produce
+         * `false`*/
         if (canWriting && text.trim()) {
             sendMessage(text);
             setText("");

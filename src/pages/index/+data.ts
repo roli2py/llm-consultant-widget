@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import type { PageContext } from "vike/types";
-import MessagesReceiver from "../../components/messages-receiver";
+import receiveMessages from "../../components/receiveMessages";
 
 export default async function data(_: PageContext) {
     let isHttps, apiToken, apiDomain, apiPort
@@ -42,7 +42,7 @@ export default async function data(_: PageContext) {
 
     const apiPublicUrl = `${protocol}://${apiDomain}:${apiPort}`;
 
-    const savedMessages = await new MessagesReceiver(apiPublicUrl, apiToken).receive("TEST");
+    const savedMessages = await receiveMessages(apiPublicUrl, apiToken, "TEST");
 
     return {
         apiToken,

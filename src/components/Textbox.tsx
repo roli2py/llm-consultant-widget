@@ -6,7 +6,7 @@ import type {
     KeyboardEvent,
     ReactElement,
     RefObject,
-    SetStateAction
+    SetStateAction,
 } from "react";
 
 
@@ -19,7 +19,7 @@ export default function Textbox(
             canWriting: boolean,
             textboxRef: RefObject<null | HTMLTextAreaElement>,
             textboxHeight: string,
-            setTextboxHeight: Dispatch<SetStateAction<string>>
+            setTextboxHeight: Dispatch<SetStateAction<string>>,
         }
 ): ReactElement {
     function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
@@ -52,7 +52,7 @@ export default function Textbox(
         if (textboxRef !== null && canWriting === true) {
             const textbox = textboxRef.current;
             if (textbox instanceof HTMLTextAreaElement) {
-                textbox.focus()
+                textbox.focus();
             }
         }
     }, [textboxRef, canWriting]);

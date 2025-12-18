@@ -1,5 +1,5 @@
+import Showdown from "showdown";
 import escapeHtmlExceptCode from "./html-escape";
-import showdownConverterProxy from "./showdown-converter-proxy";
 
 
 export default function Message(
@@ -7,10 +7,10 @@ export default function Message(
         {
             key: number,
             role: string,
-            text: string
+            text: string,
         }
 ) {
-    const converter = showdownConverterProxy.converter;
+    const converter = new Showdown.Converter();
 
     return (
         <li key={key} className={`message ${role}`}>

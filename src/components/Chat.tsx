@@ -15,12 +15,15 @@ export default function Chat(
 ) {
     const chatRef: RefObject<null | HTMLElement> = useRef(null);
 
+    // TODO add `useMemo()`?
     const messagesComponents = messages.map((message, index) => {
         return (
+            // TODO replace `index` to an another identifier
             <Message key={index} role={message.role} text={message.text} />
         );
     });
 
+    // TODO can I find a better solution?
     useEffect(() => {
         if (chatRef !== null) {
             const chat = chatRef.current
@@ -29,7 +32,9 @@ export default function Chat(
                     chat.scrollTop = chat.scrollHeight;
                 }, 300);
 
-                return () => clearTimeout(timer);
+                return () => {
+                    clearTimeout(timer)
+                };
             }
         }
     }, [messagesComponents]);
