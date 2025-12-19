@@ -17,14 +17,15 @@ import "./Page.css";
 export default function Page() {
     const data: {
         apiToken: string,
-        apiPublicUrl: string,
+        apiClientUrl: string,
         savedMessages: IMessage[]
     } = useData();
-    const { apiToken, apiPublicUrl, savedMessages } = data;
+
+    const { apiToken, apiClientUrl, savedMessages } = data;
     const chatId = "PLACEHOLDER";
 
     const [messages, setMessages] = useState(savedMessages);
-    const [canWriting, setCanWriting] = useState(true);
+    const [canWriting, setCanWriting] = useState(false);
     const [text, setText] = useState("");
     const [textboxHeight, setTextboxHeight] = useState("32px");
 
@@ -32,7 +33,7 @@ export default function Page() {
     const textboxRef = useRef(null);
 
     useEffect(() => {
-        const socket = io(apiPublicUrl, {
+        const socket = io(apiClientUrl, {
             extraHeaders: {
                 // TODO switch to JWT
                 "Authorization": `Bearer ${apiToken}`
@@ -43,6 +44,7 @@ export default function Page() {
         socketRef.current = socket;
 
         socket.on("connect", () => {
+            setCanWriting(true);
             console.log("Chat connected");
         });
 

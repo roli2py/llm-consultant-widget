@@ -2,12 +2,11 @@ import type IMessage from "./interfaces/imessage";
 
 
 export default async function receiveMessages(
-    apiPublicUrl: string,
+    apiUrl: string,
     apiToken: string,
     chatId: string,
 ): Promise<IMessage[]> {
-    // TODO switch to the inner URL and condition to docker URL
-    const response = await fetch(`${apiPublicUrl}/messages?chatId=${chatId}`, {
+    const response = await fetch(`${apiUrl}/messages?chatId=${chatId}`, {
         headers: {
             "Authorization": `Bearer ${apiToken}`,
             "Content-Type": "application/json; charset=utf-8"

@@ -1,0 +1,5 @@
+div.scrollbar-rounder {
+    flex: 1 0 0;
+    border-radius: 16px;
+    overflow: hidden;
+}

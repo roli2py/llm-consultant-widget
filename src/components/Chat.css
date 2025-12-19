@@ -1,0 +1,20 @@
+main.chat {
+    flex: 1 0 220px;
+    min-height: 220px;
+    max-height: 404px;
+    background-color: white;
+    padding: 16px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Reset */
+ul.messages {
+    margin: 0;
+    padding: 0;
+}
+
+ul.messages {
+    display: flex;
+    flex-direction: column;
+}

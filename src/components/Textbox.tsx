@@ -9,6 +9,8 @@ import type {
     SetStateAction,
 } from "react";
 
+import "./Textbox.css";
+
 
 export default function Textbox(
     { text, setText, sendMessage, canWriting, textboxRef, textboxHeight, setTextboxHeight }:

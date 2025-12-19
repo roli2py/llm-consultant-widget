@@ -2,6 +2,8 @@ import settings from "./settings.json";
 
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
 
+import "./SendButton.css";
+
 
 export default function SendButton(
     { text, setText, sendMessage, canWriting, setTextboxHeight }:

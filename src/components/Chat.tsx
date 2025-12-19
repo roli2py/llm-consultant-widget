@@ -6,6 +6,8 @@ import type IMessage from "./interfaces/imessage";
 
 import type { RefObject } from "react";
 
+import "./Chat.css";
+
 
 export default function Chat(
     { messages }:
@@ -17,7 +19,6 @@ export default function Chat(
 
     const messagesComponents = useMemo(() => messages.map(message => {
         return (
-            // TODO replace `index` to an another identifier
             <Message key_={message.id} role={message.role} text={message.text} />
         );
     }), [messages]);

@@ -1,0 +1,40 @@
+/* Reset */
+li.message {
+    list-style-type: none;
+}
+
+li.message {
+    margin-top: 16px;
+    width: 80%;
+}
+
+li.message:first-child {
+    margin-top: 0;
+}
+
+li.message.user {
+    align-self: flex-end;
+}
+
+li.message.user>div.message-background {
+    background-color: #c7eeff;
+}
+
+div.message-background {
+    padding: 16px;
+    background-color: #f2f2f2;
+    border-radius: 16px;
+    filter: drop-shadow(0 2px 2px lightgrey);
+}
+
+div.message-text {
+    margin: 0;
+}
+
+div.message-text p:first-of-type {
+    margin-top: 0;
+}
+
+div.message-text p:last-of-type {
+    margin-bottom: 0;
+}

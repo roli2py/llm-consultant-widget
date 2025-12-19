@@ -1,4 +1,10 @@
 {
+    "docker": {
+        "api": {
+            "serviceName": "api",
+            "port": "5000"
+        }
+    },
     "visual": {
         "name": "Assistant",
         "description": "A helpful assistant",

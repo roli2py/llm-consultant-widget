@@ -1,11 +1,19 @@
 import { readFile } from "node:fs/promises";
 import type { PageContext } from "vike/types";
 import receiveMessages from "../../components/receiveMessages";
+import settings from "../../components/settings.json";
+
 
 export default async function data(_: PageContext) {
-    let isHttps, apiToken, apiDomain, apiPort
+    /* `apiServerUrl` -- URL that are used on the server side. When the
+     * widget is started without Docker, then the widget is always
+     * making the request from the client-side, so we can't use the
+     * docker URL and, therefore, we're using the client URL */
+    let isHttps, apiToken, protocol, apiDomain, apiPort, apiServerUrl;
 
-    if (process.env.LLM_CONSULTANT_DOCKER !== undefined) {
+    const isInDocker = process.env.LLM_CONSULTANT_DOCKER;
+
+    if (isInDocker !== undefined) {
         isHttps = await readFile("/https", "utf-8");
         apiToken = await readFile("/run/secrets/api_token", "utf-8");
         apiDomain = await readFile("/api_domain", "utf-8");
@@ -24,29 +32,33 @@ export default async function data(_: PageContext) {
 
     if (apiToken === undefined || apiToken === "") {
         throw TypeError(`The API's token must be set by settings the
-            \`LLM_CONSULTANT_API_TOKEN\` environment variable`)
+            \`LLM_CONSULTANT_API_TOKEN\` environment variable`);
     }
     if (apiDomain === undefined || apiDomain === "") {
         throw TypeError(`The API's domain must be set by settings the
-            \`LLM_CONSULTANT_API_DOMAIN\` environment variable`)
+            \`LLM_CONSULTANT_API_DOMAIN\` environment variable`);
     }
     if (apiPort === undefined || apiPort === "") {
         throw TypeError(`The API's port must be set by settings the
-            \`LLM_CONSULTANT_API_PORT\` environment variable`)
+            \`LLM_CONSULTANT_API_PORT\` environment variable`);
     }
 
-    let protocol = "http";
+    protocol = "http";
     if (isHttps !== "0") {
         protocol = "https";
     }
 
-    const apiPublicUrl = `${protocol}://${apiDomain}:${apiPort}`;
+    const apiClientUrl = `${protocol}://${apiDomain}:${apiPort}`;
+    apiServerUrl = apiClientUrl;
+    if (isInDocker !== undefined) {
+        apiServerUrl = `http://${settings.docker.api.serviceName}:${settings.docker.api.port}`;
+    }
 
-    const savedMessages = await receiveMessages(apiPublicUrl, apiToken, "TEST");
+    const savedMessages = await receiveMessages(apiServerUrl, apiToken, "TEST");
 
     return {
         apiToken,
-        apiPublicUrl,
+        apiClientUrl,
         savedMessages,
     }
 }
