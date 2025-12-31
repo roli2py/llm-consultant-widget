@@ -31,6 +31,7 @@
   "include": [
     "src",
     "vitest.setup.ts",
-    "fontsource.d.ts"
+    "fontsource.d.ts",
+    "vike.d.ts"
   ]
 }
